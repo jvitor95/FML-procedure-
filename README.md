@@ -28,4 +28,4 @@ A simple Rstudio function for enabling the testing of dispersion effects in fact
 
 ;;;    length(vars) == nrow(xmat)
 
-;;;    length(vars) must be a multiple of 2
+;;;    length(vars) must be a power of 2
