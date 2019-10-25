@@ -1,0 +1,23 @@
+FMLfunc <- function(vars,xmat,replications){
+  if( length(vars)!= nrow(xmat) ) stop('vars and xmat not equal length')
+  if( replications < 2 ) stop('must have at least 2 replications associated with calculation of variance')
+  bignum <- 1000000
+  fmlvector <- rep(NA,length(vars)-1)
+  fmldist <- matrix(rep(NA,bignum*(length(vars)/2)),ncol = (length(vars)/2))
+  pvalvec <- rep(NA,length(vars)-1)
+  #creating fml vectors
+  for (i in c(1:length(vars)-1)){
+    fmlvector[i] <- (prod(vars[xmat[,i]==1])/prod(vars[xmat[,i]==-1]))^(1/(length(vars)/2))
+  }
+  #simulating flmdist 
+  for (i in c(1:(length(vars)/2))){
+    fmldist[,i] <- rf(bignum,replications-1,replications-1)
+  }
+  fmldist2 <- apply(fmldist,1,prod)^(1/(length(vars)/2))
+  #pvalues:
+  for (i in c(1:length(vars)-1)){
+    pvalvec[i] <- 2*table(log(fmldist2)>abs(log(fmlvector[i])))[2]/bignum
+  }
+  pvalvec
+  
+}
