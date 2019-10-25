@@ -1,6 +1,8 @@
 FMLfunc <- function(vars,xmat,replications){
-  if( length(vars)!= nrow(xmat) ) stop('vars and xmat not equal length')
+  if( length(vars)!= nrow(xmat) ) stop('length of vars and nrow xmat not equal')
   if( replications < 2 ) stop('must have at least 2 replications associated with calculation of variance')
+  if((log(length(vars),2)%%2) != 1 & (log(length(vars),2)%%2) != 0 ) stop('design matrix and length of variance must be a power of 2 ') 
+  #write check asking if it's standard order, if yes, we can provide the calculations, otherwise they must input it!
   bignum <- 1000000
   fmlvector <- rep(NA,length(vars)-1)
   fmldist <- matrix(rep(NA,bignum*(length(vars)/2)),ncol = (length(vars)/2))
